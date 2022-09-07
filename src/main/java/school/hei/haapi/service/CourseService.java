@@ -25,4 +25,8 @@ public class CourseService {
     public List<Course> saveAll(List<Course> courseList) {
         return courseRepository.saveAll(courseList);
     }
+
+    public Course save(Course course) {
+        return courseRepository.save(course);
+    }
 }

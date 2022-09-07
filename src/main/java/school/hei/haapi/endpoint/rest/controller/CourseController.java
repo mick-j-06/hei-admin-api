@@ -34,12 +34,13 @@ public class CourseController {
     }
 
     @PutMapping(value = "")
-    public List<Course> createOrUpdateCourses(@RequestBody List<Course> toWrite) {
-        return courseService.saveAll(toWrite.stream()
-                        .map(courseMapper::toDomain)
-                        .collect(Collectors.toUnmodifiableList())
-                ).stream()
-                .map(courseMapper::toRest)
-                .collect(Collectors.toUnmodifiableList());
+    public Course createOrUpdateCourses(@RequestBody Course toWrite) {
+        return courseMapper.toRest(courseService.save(toWrite));
+//        return courseService.saveAll(toWrite.stream()
+//                        .map(courseMapper::toDomain)
+//                        .collect(Collectors.toUnmodifiableList())
+//                ).stream()
+//                .map(courseMapper::toRest)
+//                .collect(Collectors.toUnmodifiableList());
     }
 }
