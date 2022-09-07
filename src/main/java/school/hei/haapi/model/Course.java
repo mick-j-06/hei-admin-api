@@ -29,7 +29,7 @@ public class Course implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String ref;
     private String name;
     private int credits;
