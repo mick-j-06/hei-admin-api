@@ -12,7 +12,6 @@ import school.hei.haapi.endpoint.rest.api.TeachingApi;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
 import school.hei.haapi.endpoint.rest.model.Course;
-import school.hei.haapi.endpoint.rest.model.Group;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.TestUtils;
 
@@ -79,6 +78,14 @@ public class CourseIT {
 
         TeachingApi api = new TeachingApi(anonymousClient);
         assertThrowsForbiddenException(api::getCourses);
+    }
+
+    @Test
+    void badtoken_write_ko() {
+        ApiClient anonymousClient = anApiClient(BAD_TOKEN);
+
+        TeachingApi api = new TeachingApi(anonymousClient);
+        assertThrowsForbiddenException(() -> api.createOrUpdateCourses(new Course()));
     }
 
     @Test
