@@ -12,14 +12,15 @@ import school.hei.haapi.endpoint.rest.api.TeachingApi;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
 import school.hei.haapi.endpoint.rest.model.Course;
+import school.hei.haapi.endpoint.rest.model.Group;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.TestUtils;
 
 import java.util.List;
 
 import static java.util.UUID.randomUUID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static school.hei.haapi.integration.conf.TestUtils.*;
 
@@ -100,5 +101,47 @@ public class CourseIT {
         assertEquals(course1(), actual1);
         assertTrue(actualCourses.contains(course1()));
         assertTrue(actualCourses.contains(course2()));
+    }
+
+    @Test
+    void student_write_ko() {
+        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
+
+        TeachingApi api = new TeachingApi(student1Client);
+        assertThrowsForbiddenException(() -> api.createOrUpdateCourses(new Course()));
+    }
+
+    @Test
+    void teacher_write_ko() {
+        ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
+
+        TeachingApi api = new TeachingApi(teacher1Client);
+        assertThrowsForbiddenException(() -> api.createOrUpdateCourses(new Course()));
+    }
+
+    @Test
+    void manager_write_create_ok() throws ApiException {
+        ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
+        Course toCreate = someCreatableCourse();
+
+        TeachingApi api = new TeachingApi(manager1Client);
+        Course created = api.createOrUpdateCourses(toCreate);
+
+        assertTrue(isValidUUID(created.getId()));
+        toCreate.setId(created.getId());
+        assertNotNull(created.getTotalHours());
+        toCreate.setTotalHours(created.getTotalHours());
+    }
+
+    @Test
+    void manager_write_update_ok() throws ApiException {
+        ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
+        TeachingApi api = new TeachingApi(manager1Client);
+        Course toUpdate = api.createOrUpdateCourses(someCreatableCourse());
+        toUpdate.setName("A new name zero");
+
+        Course updated = api.createOrUpdateCourses(toUpdate);
+
+        assertEquals(updated, toUpdate);
     }
 }
