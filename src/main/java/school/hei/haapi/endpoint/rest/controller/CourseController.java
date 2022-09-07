@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/course")
+@RequestMapping(value = "/courses")
 public class CourseController {
     private CourseService courseService;
     private CourseMapper courseMapper;
