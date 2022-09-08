@@ -21,6 +21,6 @@ public class PlaceService {
     }
 
     public List<Place> saveAll(List<Place> placeList) {
-        return placeRepository.findAll();
+        return placeRepository.saveAll(placeList);
     }
 }
