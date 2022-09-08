@@ -139,7 +139,7 @@ public class CourseIT {
         assertTrue(isValidUUID(created.getId()));
         toCreate.setId(created.getId());
         assertNotNull(created.getTotalHours());
-        toCreate.setTotalHours(created.getTotalHours());
+        assertEquals(toCreate,created);
     }
 
     @Test
