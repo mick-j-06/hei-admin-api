@@ -419,14 +419,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Place'
+              type: array
+              items:
+                $ref: '#/components/schemas/Place'
       responses:
         '200':
           description: The created or updated places
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Place'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
         '400':
           $ref: '#/components/responses/400'
         '403':
