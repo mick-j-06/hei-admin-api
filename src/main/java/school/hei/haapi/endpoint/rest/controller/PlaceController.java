@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/place")
+@RequestMapping(value = "/places")
 public class PlaceController {
     private PlaceService placeService;
     private PlaceMapper placeMapper;
