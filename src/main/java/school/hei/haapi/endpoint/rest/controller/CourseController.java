@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import school.hei.haapi.endpoint.rest.mapper.CourseMapper;
-import school.hei.haapi.model.Course;
+import school.hei.haapi.endpoint.rest.model.Course;
 import school.hei.haapi.service.CourseService;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class CourseController {
 
     @PutMapping(value = "")
     public Course createOrUpdateCourses(@RequestBody Course toWrite) {
-        return courseMapper.toRest(courseService.save(toWrite));
+        return courseMapper.toRest(courseService.save(courseMapper.toDomain(toWrite)));
 //        return courseService.saveAll(toWrite.stream()
 //                        .map(courseMapper::toDomain)
 //                        .collect(Collectors.toUnmodifiableList())
