@@ -13,6 +13,7 @@ import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
 import school.hei.haapi.endpoint.rest.model.Course;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
+import school.hei.haapi.integration.conf.AbstractContextInitializer;
 import school.hei.haapi.integration.conf.TestUtils;
 
 import java.util.List;
@@ -27,13 +28,14 @@ import static school.hei.haapi.integration.conf.TestUtils.COURSE1_ID;
 import static school.hei.haapi.integration.conf.TestUtils.MANAGER1_TOKEN;
 import static school.hei.haapi.integration.conf.TestUtils.STUDENT1_TOKEN;
 import static school.hei.haapi.integration.conf.TestUtils.TEACHER1_TOKEN;
+import static school.hei.haapi.integration.conf.TestUtils.anAvailableRandomPort;
 import static school.hei.haapi.integration.conf.TestUtils.assertThrowsForbiddenException;
 import static school.hei.haapi.integration.conf.TestUtils.isValidUUID;
 import static school.hei.haapi.integration.conf.TestUtils.setUpCognito;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Testcontainers
-@ContextConfiguration(initializers = GroupIT.ContextInitializer.class)
+@ContextConfiguration(initializers = CourseIT.ContextInitializer.class)
 @AutoConfigureMockMvc
 public class CourseIT {
     @MockBean
@@ -43,7 +45,7 @@ public class CourseIT {
     private CognitoComponent cognitoComponentMock;
 
     private static ApiClient anApiClient(String token) {
-        return TestUtils.anApiClient(token, GroupIT.ContextInitializer.SERVER_PORT);
+        return TestUtils.anApiClient(token, ContextInitializer.SERVER_PORT);
     }
 
     public static Course course1() {
@@ -150,5 +152,14 @@ public class CourseIT {
         Course updated = api.createOrUpdateCourses(toUpdate);
 
         assertEquals(updated, toUpdate);
+    }
+
+    static class ContextInitializer extends AbstractContextInitializer {
+        public static final int SERVER_PORT = anAvailableRandomPort();
+
+        @Override
+        public int getServerPort() {
+            return SERVER_PORT;
+        }
     }
 }
