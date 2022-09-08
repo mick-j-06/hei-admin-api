@@ -352,6 +352,91 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
+  '/places/{id}':
+    get:
+      tags:
+        - Event
+      summary: Get place by identifier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: getPlaceById
+      responses:
+        '200':
+          description: The identified place
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /places:
+    get:
+      tags:
+        - Event
+      summary: Get all places
+      operationId: getPlaces
+      responses:
+        '200':
+          description: List of all places
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Event
+      summary: Create new places or update existing places
+      description: Update places when id are provided, create them otherwise.
+      operationId: createOrUpdatePlaces
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        '200':
+          description: The created or updated places
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
   '/teachers/{id}':
     get:
       tags:
@@ -835,6 +920,8 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
+
 components:
   securitySchemes:
     BearerAuth:
@@ -915,6 +1002,7 @@ components:
           format: date-time
         status:
           $ref: '#/components/schemas/EnableStatus'
+
     EnableStatus:
       type: string
       enum:
@@ -943,6 +1031,31 @@ components:
         creation_datetime:
           type: string
           format: date-time
+    Place:
+      type: object
+      properties:
+        id:
+          type: string
+        name: 
+          type: string
+          example: Andavamamba
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: The group number one
+        ref:
+          type: string
+          example: G1
+        starting_hours:
+          type: string
+          format: date-time
+        ending_hours:
+          type: string
+          format: date-time
     Course:
       type: object
       properties:
@@ -958,6 +1071,7 @@ components:
           type: integer
         total_hours:
           type: integer
+
     CreateFee:
       type: object
       properties:
@@ -976,6 +1090,7 @@ components:
         due_datetime:
           type: string
           format: date-time
+
     Fee:
       allOf:
         - $ref: '#/components/schemas/CreateFee'
@@ -993,6 +1108,7 @@ components:
             - UNPAID
             - PAID
             - LATE
+
     CreateDelayPenaltyChange:
       type: object
       properties:
@@ -1006,6 +1122,7 @@ components:
           type: integer
         applicability_delay_after_grace:
           type: integer
+
     DelayPenalty:
       allOf:
         - $ref: '#/components/schemas/CreateDelayPenaltyChange'
