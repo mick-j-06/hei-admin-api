@@ -31,6 +31,7 @@ public class Course implements Serializable {
     @NotBlank
     @Column(nullable = false,unique = true)
     private String ref;
+    @Column(nullable = false)
     private String name;
     private int credits;
     private int total_hours;
