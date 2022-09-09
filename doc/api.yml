@@ -353,7 +353,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  '/places/{place_id}':
+  '/places/{id}':
     get:
       tags:
         - Event
@@ -442,7 +442,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  '/events/{event_id}':
+  '/events/{id}':
     get:
       tags:
         - Event
