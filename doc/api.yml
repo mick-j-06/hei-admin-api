@@ -353,7 +353,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  '/places/{id}':
+  '/places/{place_id}':
     get:
       tags:
         - Event
@@ -442,7 +442,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  '/events/{id}':
+  '/events/{event_id}':
     get:
       tags:
         - Event
@@ -519,6 +519,171 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/events/{event_id}/event_participants/{event_participant_id}':
+    get:
+      tags:
+        - Event
+      summary: Get event event_participant by identifier
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: event_participant_id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: getEventEventParticipantById
+      responses:
+        '200':
+          description: Identified event event participant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventParticipant'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/events/{event_id}/event_participants':
+    get:
+      tags:
+        - Event
+      summary: Get all event event_participants
+      description: Event participants can be filtered with an optional status parameter.
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum:
+              - EXPECTED
+              - HERE
+              - MISSING
+      operationId: getEventEventParticipants
+      responses:
+        '200':
+          description: List of all event event_participants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventParticipant'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Event
+      summary: Create event event_participants
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: createEventEventParticipants
+      requestBody:
+        description: Event event participants to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventParticipant'
+      responses:
+        '200':
+          description: Created student fees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fee'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  /event_participants:
+    get:
+      tags:
+        - Event
+      summary: Get all event event_participants filtered by status
+      parameters:
+        - name: status
+          in: query
+          description: "See the event_participants object for its value."
+          schema:
+            type: string
+            default: EXPECTED
+            enum:
+              - EXPECTED
+              - HERE
+              - MISSING
+        - name: page
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      operationId: getEventParticipants
+      responses:
+        '200':
+          description: List of filtered event event_participants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventParticipant'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -1140,7 +1305,7 @@ components:
         event:
           allOf:
             - $ref: '#/components/schemas/Event'
-        user:
+        participant:
           allOf:
             - $ref: '#/components/schemas/User'
         status:
