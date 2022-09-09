@@ -611,10 +611,11 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-    post:
+    put:
       tags:
         - Event
-      summary: Create event event_participants
+      summary: Create new event event_participants or update existing event event_participants
+      description: Update event event_participants when id are provided, create them otherwise.
       parameters:
         - name: event_id
           in: path
@@ -1300,21 +1301,21 @@ components:
     CreateEventParticipant:
       type: object
       properties:
+        id:
+          type: string
         status:
           type: string
           enum:
             - EXPECTED
             - HERE
             - MISSING
-        userParticipant:
+        user_participant:
           allOf:
             - $ref: '#/components/schemas/User'
 
     EventParticipant:
       type: object
       properties:
-        id:
-          type: string
         event_id:
           type: string
       allOf:
