@@ -630,16 +630,16 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/EventParticipant'
+                $ref: '#/components/schemas/CreateEventParticipant'
       responses:
         '200':
-          description: Created student fees
+          description: Created Event event participants
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Fee'
+                  $ref: '#/components/schemas/EventParticipant'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -1297,23 +1297,28 @@ components:
           type: string
           example: Andavamamba
 
-    EventParticipant:
+    CreateEventParticipant:
       type: object
       properties:
-        id:
-          type: string
-        event:
-          allOf:
-            - $ref: '#/components/schemas/Event'
-        participant:
-          allOf:
-            - $ref: '#/components/schemas/User'
         status:
           type: string
           enum:
             - EXPECTED
             - HERE
             - MISSING
+        userParticipant:
+          allOf:
+            - $ref: '#/components/schemas/User'
+
+    EventParticipant:
+      type: object
+      properties:
+        id:
+          type: string
+        event_id:
+          type: string
+      allOf:
+        - $ref: '#/components/schemas/CreateEventParticipant'
     Event:
       type: object
       properties:
