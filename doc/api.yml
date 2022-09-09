@@ -1131,6 +1131,24 @@ components:
         name: 
           type: string
           example: Andavamamba
+
+    EventParticipant:
+      type: object
+      properties:
+        id:
+          type: string
+        event:
+          allOf:
+            - $ref: '#/components/schemas/Event'
+        user:
+          allOf:
+            - $ref: '#/components/schemas/User'
+        status:
+          type: string
+          enum:
+            - EXPECTED
+            - HERE
+            - MISSING
     Event:
       type: object
       properties:
