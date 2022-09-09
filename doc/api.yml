@@ -1148,6 +1148,9 @@ components:
         ending_hours:
           type: string
           format: date-time
+        user_responsible:
+          allOf:
+            - $ref: '#/components/schemas/User'
         place:
           allOf:
             - $ref: '#/components/schemas/Place'

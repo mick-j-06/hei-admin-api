@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import school.hei.haapi.endpoint.rest.mapper.PlaceMapper;
-import school.hei.haapi.model.Place;
+import school.hei.haapi.endpoint.rest.model.Place;
 import school.hei.haapi.service.PlaceService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 @RestController
 @AllArgsConstructor
@@ -35,11 +37,11 @@ public class PlaceController {
 
     @PutMapping(value = "")
     public List<Place> createOrUpdatePlaces(@RequestBody List<Place> toWrite) {
-        return placeService.saveAll(toWrite.stream()
-                        .map(placeMapper::toRest)
-                        .collect(Collectors.toUnmodifiableList())
-                ).stream()
+        var saved = placeService.saveAll(toWrite.stream()
+                .map(placeMapper::toDomain)
+                .collect(toUnmodifiableList()));
+        return saved.stream()
                 .map(placeMapper::toRest)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(toUnmodifiableList());
     }
 }
