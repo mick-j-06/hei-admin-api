@@ -1315,9 +1315,8 @@ components:
             - EXPECTED
             - HERE
             - MISSING
-        user_participant:
-          allOf:
-            - $ref: '#/components/schemas/User'
+        user_participant_id:
+          type: string
 
     EventParticipant:
       type: object
