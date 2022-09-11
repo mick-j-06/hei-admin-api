@@ -477,14 +477,11 @@ paths:
         - Event
       summary: Get all events order by starting_hours
       parameters:
-        - name: page
+        - name: place_id
           in: query
+          required: false
           schema:
-            $ref: '#/components/schemas/Page'
-        - name: page_size
-          in: query
-          schema:
-            $ref: '#/components/schemas/PageSize'
+            type: string
       operationId: getEvents
       responses:
         '200':
@@ -1303,7 +1300,7 @@ components:
       properties:
         id:
           type: string
-        name: 
+        name:
           type: string
           example: Andavamamba
 
