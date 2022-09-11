@@ -6,6 +6,7 @@ import school.hei.haapi.model.Event;
 import school.hei.haapi.model.exception.BadRequestException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -37,5 +38,9 @@ public class EventValidator implements Consumer<Event> {
                     .collect(Collectors.joining(". "));
             throw new BadRequestException(formattedViolationMessages);
         }
+    }
+
+    public void accept(List<Event> eventList) {
+        eventList.forEach(this::accept);
     }
 }
