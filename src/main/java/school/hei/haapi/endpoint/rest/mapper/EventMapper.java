@@ -3,13 +3,20 @@ package school.hei.haapi.endpoint.rest.mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.haapi.model.Event;
+import school.hei.haapi.model.Place;
+import school.hei.haapi.model.User;
+import school.hei.haapi.model.exception.NotFoundException;
+import school.hei.haapi.service.PlaceService;
+import school.hei.haapi.service.UserService;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 @AllArgsConstructor
 public class EventMapper {
-    private PlaceMapper placeMapper;
+
+    private final PlaceService placeService;
+    private final UserService userService;
 
     public school.hei.haapi.endpoint.rest.model.Event toRest(Event event) {
         var restEvent = new school.hei.haapi.endpoint.rest.model.Event();
@@ -18,18 +25,28 @@ public class EventMapper {
         restEvent.setRef(event.getRef());
         restEvent.setStartingHours(event.getStartingHours());
         restEvent.setEndingHours(event.getEndingHours());
-        restEvent.setPlace(placeMapper.toRest(event.getPlace()));
+        restEvent.setUserManagerId(event.getUserManager().getId());
+        restEvent.setPlaceId(event.getPlace().getId());
         return restEvent;
     }
 
     public Event toDomain(school.hei.haapi.endpoint.rest.model.Event restEvent) {
+        Place place = placeService.getById(restEvent.getPlaceId());
+        User user = userService.getById(restEvent.getUserManagerId());
+        if (place == null) {
+            throw new NotFoundException("Place id=" + restEvent.getPlaceId() + " not found");
+        }
+        if (user == null) {
+            throw new NotFoundException("User id=" + restEvent.getUserManagerId() + " not found");
+        }
         return Event.builder()
                 .id(restEvent.getId())
                 .name(restEvent.getName())
                 .ref(restEvent.getRef())
-                .startingHours(LocalDate.from(restEvent.getStartingHours()))
-                .endingHours(LocalDate.from(restEvent.getEndingHours()))
-                .place(placeMapper.toDomain(restEvent.getPlace()))
+                .startingHours(LocalDateTime.from(restEvent.getStartingHours()))
+                .endingHours(LocalDateTime.from(restEvent.getEndingHours()))
+                .userManager(user)
+                .place(place)
                 .build();
     }
 }
