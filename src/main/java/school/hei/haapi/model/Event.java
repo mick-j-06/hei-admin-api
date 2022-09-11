@@ -19,6 +19,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "\"event\"")
@@ -38,9 +39,9 @@ public class Event {
     @Column(nullable = false, unique = true)
     private String ref;
     @Column(nullable = false)
-    private LocalDateTime startingHours;
+    private Instant startingHours;
     @Column(nullable = false)
-    private LocalDateTime endingHours;
+    private Instant endingHours;
     @ManyToOne
     @JoinColumn(name = "user_manager_id", nullable = false)
     private User userManager;
@@ -48,15 +49,11 @@ public class Event {
     @JoinColumn(name = "place_id", nullable = false)
     private Place place;
 
-//  INPUT FORMAT LOCALDATETIME : "2022-05-06T13:45:30"
-
     public Instant getStartingHours() {
-        ZoneId zoneId = ZoneId.systemDefault();
-        return startingHours.atZone(zoneId).toInstant();
+        return startingHours.truncatedTo(ChronoUnit.MILLIS);
     }
 
     public Instant getEndingHours() {
-        ZoneId zoneId = ZoneId.systemDefault();
-        return endingHours.atZone(zoneId).toInstant();
+        return endingHours.truncatedTo(ChronoUnit.MILLIS);
     }
 }
