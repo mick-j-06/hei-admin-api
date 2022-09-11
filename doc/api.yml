@@ -1326,6 +1326,7 @@ components:
           type: string
       allOf:
         - $ref: '#/components/schemas/CreateEventParticipant'
+
     Event:
       type: object
       properties:
@@ -1333,22 +1334,20 @@ components:
           type: string
         name:
           type: string
-          example: The group number one
+          example: The event number one
         ref:
           type: string
-          example: G1
+          example: EVT1
         starting_hours:
           type: string
           format: date-time
         ending_hours:
           type: string
           format: date-time
-        user_manager:
-          allOf:
-            - $ref: '#/components/schemas/User'
-        place:
-          allOf:
-            - $ref: '#/components/schemas/Place'
+        user_manager_id:
+          type: string
+        place_id:
+          type: string
     Course:
       type: object
       properties:
