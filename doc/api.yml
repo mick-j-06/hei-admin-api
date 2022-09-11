@@ -475,7 +475,16 @@ paths:
     get:
       tags:
         - Event
-      summary: Get all events
+      summary: Get all events order by starting_hours
+      parameters:
+        - name: page
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageSize'
       operationId: getEvents
       responses:
         '200':
