@@ -24,7 +24,7 @@ public class EventController {
     private EventMapper eventMapper;
 
     @GetMapping(value = "")
-    public List<Event> getEvents(@RequestParam(name = "place_id") String placeId) {
+    public List<Event> getEvents(@RequestParam(name = "place_id", required = false) String placeId) {
         return eventService.getAll(placeId).stream()
                 .map(eventMapper::toRest)
                 .collect(Collectors.toUnmodifiableList());
