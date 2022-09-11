@@ -1337,7 +1337,7 @@ components:
         ending_hours:
           type: string
           format: date-time
-        user_responsible:
+        user_manager:
           allOf:
             - $ref: '#/components/schemas/User'
         place:
