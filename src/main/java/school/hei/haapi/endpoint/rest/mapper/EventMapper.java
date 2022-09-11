@@ -43,8 +43,8 @@ public class EventMapper {
                 .id(restEvent.getId())
                 .name(restEvent.getName())
                 .ref(restEvent.getRef())
-                .startingHours(LocalDateTime.from(restEvent.getStartingHours()))
-                .endingHours(LocalDateTime.from(restEvent.getEndingHours()))
+                .startingHours(restEvent.getStartingHours())
+                .endingHours(restEvent.getEndingHours())
                 .userManager(user)
                 .place(place)
                 .build();
