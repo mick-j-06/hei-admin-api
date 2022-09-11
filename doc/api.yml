@@ -617,11 +617,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-    put:
+    post:
       tags:
         - Event
-      summary: Create new event event_participants or update existing event event_participants
-      description: Update event event_participants when id are provided, create them otherwise.
+      summary: Create new event event_participants
       parameters:
         - name: event_id
           in: path
@@ -641,6 +640,46 @@ paths:
       responses:
         '200':
           description: Created Event event participants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventParticipant'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Event
+      summary: Update existing event event_participants
+      description: Update event event_participants when id are provided, create them otherwise.
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: updateEventEventParticipants
+      requestBody:
+        description: Event event participants to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventParticipant'
+      responses:
+        '200':
+          description: Updated Event event participants
           content:
             application/json:
               schema:
@@ -1309,18 +1348,18 @@ components:
       properties:
         id:
           type: string
-        status:
-          type: string
-          enum:
-            - EXPECTED
-            - HERE
-            - MISSING
         user_participant_id:
           type: string
 
     EventParticipant:
       type: object
       properties:
+        status:
+          type: string
+          enum:
+            - EXPECTED
+            - HERE
+            - MISSING
         event_id:
           type: string
       allOf:
