@@ -15,11 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Entity
@@ -39,12 +37,10 @@ public class Event {
     @NotBlank
     @Column(nullable = false, unique = true)
     private String ref;
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private LocalDate startingHours;
-    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime startingHours;
     @Column(nullable = false)
-    private LocalDate endingHours;
+    private LocalDateTime endingHours;
     @ManyToOne
     @JoinColumn(name = "user_manager_id", nullable = false)
     private User userManager;
@@ -52,13 +48,15 @@ public class Event {
     @JoinColumn(name = "place_id", nullable = false)
     private Place place;
 
+//  INPUT FORMAT LOCALDATETIME : "2022-05-06T13:45:30"
+
     public Instant getStartingHours() {
         ZoneId zoneId = ZoneId.systemDefault();
-        return startingHours.atStartOfDay(zoneId).toInstant();
+        return startingHours.atZone(zoneId).toInstant();
     }
 
     public Instant getEndingHours() {
         ZoneId zoneId = ZoneId.systemDefault();
-        return endingHours.atStartOfDay(zoneId).toInstant();
+        return endingHours.atZone(zoneId).toInstant();
     }
 }
