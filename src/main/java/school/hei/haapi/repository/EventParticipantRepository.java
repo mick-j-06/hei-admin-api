@@ -8,8 +8,21 @@ import school.hei.haapi.model.EventParticipant;
 import java.util.List;
 
 @Repository
-public interface EventParticipantRepository extends JpaRepository<EventParticipant,String> {
-    void deleteAllByEvent_Id(String eventId);
+public interface EventParticipantRepository extends JpaRepository<EventParticipant, String> {
+
+    EventParticipant getByIdAndEvent_Id(String id, String eventId);
+
+    List<EventParticipant> getAllByEvent_Id(String eventId);
+
+    List<EventParticipant> getAllByEvent_Id(String eventId, Pageable pageable);
+
+    List<EventParticipant> getAllByEvent_IdAndStatus(String eventId, school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status);
+
+    List<EventParticipant> getAllByEvent_IdAndStatus(String eventId, school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status, Pageable pageable);
 
     List<EventParticipant> getAllByStatus(school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status);
+
+    List<EventParticipant> getAllByStatus(school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status, Pageable pageable);
+
+    void deleteAllByEvent_Id(String eventId);
 }
