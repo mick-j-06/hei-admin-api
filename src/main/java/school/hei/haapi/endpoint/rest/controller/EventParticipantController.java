@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import school.hei.haapi.endpoint.rest.mapper.EventParticipantMapper;
 import school.hei.haapi.endpoint.rest.model.CreateEventParticipant;
@@ -28,6 +30,18 @@ public class EventParticipantController {
         return eventParticipantMapper.toRest(eventParticipantService.getByEventIdAndId(event_id, event_participant_id));
     }
 
+    @GetMapping(value = "/events/{event_id}/event_participants")
+    public List<EventParticipant> getEventEventParticipants(
+            @PathVariable String event_id,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "page_size", required = false) Integer page_size,
+            @RequestParam(name = "status", required = false) String status
+    ) {
+        return eventParticipantService.getAllByEventId(page, page_size, event_id, status)
+                .stream().map(eventParticipantMapper::toRest)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     @PostMapping(value = "/events/{event_id}/event_participants")
     public List<EventParticipant> createEventEventParticipants(
             @PathVariable String event_id,
@@ -41,6 +55,30 @@ public class EventParticipantController {
                         restEventParticipantList.stream().map(eventParticipantMapper::toDomain)
                                 .collect(Collectors.toUnmodifiableList())
                 ).stream().map(eventParticipantMapper::toRest)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    @PutMapping(value = "/events/{event_id}/event_participants")
+    public List<EventParticipant> updateEventEventParticipants(
+            @PathVariable String event_id,
+            @RequestBody List<EventParticipant> eventParticipantList
+    ) {
+        return eventParticipantService.updateAll(
+                        event_id,
+                        eventParticipantList.stream().map(eventParticipantMapper::toDomain)
+                                .collect(Collectors.toUnmodifiableList())
+                ).stream().map(eventParticipantMapper::toRest)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    @GetMapping(value = "/event_participants")
+    public List<EventParticipant> getEventParticipants(
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "page_size", required = false) Integer page_size,
+            @RequestParam(name = "status", required = false) String status
+    ) {
+        return eventParticipantService.getAll(page, page_size, status)
+                .stream().map(eventParticipantMapper::toRest)
                 .collect(Collectors.toUnmodifiableList());
     }
 }
