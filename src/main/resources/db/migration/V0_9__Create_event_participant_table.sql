@@ -14,8 +14,8 @@ create table if not exists "event_participant"
     id               varchar
         constraint event_participant_pk primary key default uuid_generate_v4(),
     status           event_participant_status_type not null,
-    user_participant varchar                       not null
+    user_participant_id varchar                       not null
         constraint event_participant_user_id_fk references "user" (id),
-    event            varchar                       not null
+    event_id            varchar                       not null
         constraint event_participant_event_id_fk references "event" (id)
 );
