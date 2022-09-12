@@ -35,7 +35,6 @@ public class EventParticipantMapper {
 
     public school.hei.haapi.endpoint.rest.model.EventParticipant toRestCreateEventParticipant(String eventId, CreateEventParticipant createEventParticipant) {
         var eventParticipant = new school.hei.haapi.endpoint.rest.model.EventParticipant();
-        eventParticipant.setId(createEventParticipant.getId());
         eventParticipant.setStatus(EXPECTED);
         eventParticipant.setUserParticipantId(createEventParticipant.getUserParticipantId());
         eventParticipant.setEventId(eventId);
