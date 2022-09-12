@@ -7,9 +7,6 @@ import school.hei.haapi.model.EventParticipant;
 import school.hei.haapi.repository.EventRepository;
 import school.hei.haapi.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum.EXPECTED;
 
 @Component
@@ -43,14 +40,5 @@ public class EventParticipantMapper {
         eventParticipant.setUserParticipantId(createEventParticipant.getUserParticipantId());
         eventParticipant.setEventId(eventId);
         return eventParticipant;
-    }
-
-    public List<school.hei.haapi.endpoint.rest.model.EventParticipant> toRestCreateEventParticipantList(String eventId, List<CreateEventParticipant> createEventParticipants) {
-        List<school.hei.haapi.endpoint.rest.model.EventParticipant> eventParticipantList = new ArrayList<>();
-        for (CreateEventParticipant createEventParticipant : createEventParticipants) {
-            eventParticipantList
-                    .add(this.toRestCreateEventParticipant(eventId, createEventParticipant));
-        }
-        return eventParticipantList;
     }
 }
