@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.haapi.endpoint.rest.model.CreateEventParticipant;
 import school.hei.haapi.model.EventParticipant;
-import school.hei.haapi.model.exception.BadRequestException;
 import school.hei.haapi.repository.EventParticipantRepository;
 import school.hei.haapi.repository.EventRepository;
 import school.hei.haapi.repository.UserRepository;
@@ -54,18 +53,5 @@ public class EventParticipantMapper {
         eventParticipant.setUserParticipantId(createEventParticipant.getUserParticipantId());
         eventParticipant.setEventId(eventId);
         return eventParticipant;
-    }
-
-    public school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum statusEnum(String status) {
-        switch (status) {
-            case "EXPECTED":
-                return EXPECTED;
-            case "HERE":
-                return HERE;
-            case "MISSING":
-                return MISSING;
-            default:
-                throw new BadRequestException("status :" + status + " not found");
-        }
     }
 }

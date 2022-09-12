@@ -16,6 +16,8 @@ import school.hei.haapi.service.EventParticipantService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum;
+
 @RestController
 @AllArgsConstructor
 public class EventParticipantController {
@@ -35,7 +37,7 @@ public class EventParticipantController {
             @PathVariable String event_id,
             @RequestParam(name = "page", required = false) Integer page,
             @RequestParam(name = "page_size", required = false) Integer page_size,
-            @RequestParam(name = "status", required = false) String status
+            @RequestParam(name = "status", required = false) StatusEnum status
     ) {
         return eventParticipantService.getAllByEventId(page, page_size, event_id, status)
                 .stream().map(eventParticipantMapper::toRest)
@@ -75,7 +77,7 @@ public class EventParticipantController {
     public List<EventParticipant> getEventParticipants(
             @RequestParam(name = "page", required = false) Integer page,
             @RequestParam(name = "page_size", required = false) Integer page_size,
-            @RequestParam(name = "status", required = false) String status
+            @RequestParam(name = "status", required = false) StatusEnum status
     ) {
         return eventParticipantService.getAll(page, page_size, status)
                 .stream().map(eventParticipantMapper::toRest)
