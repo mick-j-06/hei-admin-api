@@ -1346,14 +1346,14 @@ components:
     CreateEventParticipant:
       type: object
       properties:
-        id:
-          type: string
         user_participant_id:
           type: string
 
     EventParticipant:
       type: object
       properties:
+        id:
+          type: string
         status:
           type: string
           enum:
