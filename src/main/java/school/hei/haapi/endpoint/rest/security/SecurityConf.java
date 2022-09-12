@@ -112,8 +112,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUT, "/events/**").hasAnyRole(MANAGER.getRole())
                 .antMatchers(GET, "/events/*/event_participants").authenticated()
                 .antMatchers(GET, "/events/*/event_participants/*").authenticated()
-                .antMatchers(POST, "/events/*/event_participants").hasAnyRole(MANAGER.getRole())
-                .antMatchers(PUT, "/events/*/event_participants").hasAnyRole(MANAGER.getRole())
+                .antMatchers(POST, "/events/*/event_participants/**").hasAnyRole(MANAGER.getRole())
+                .antMatchers(PUT, "/events/*/event_participants/**").hasAnyRole(MANAGER.getRole())
                 .antMatchers(GET, "/event_participants").authenticated()
                 .antMatchers("/**").denyAll()
 
