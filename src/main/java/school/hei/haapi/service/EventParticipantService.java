@@ -3,6 +3,7 @@ package school.hei.haapi.service;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import school.hei.haapi.endpoint.rest.mapper.EventParticipantMapper;
 import school.hei.haapi.model.EventParticipant;
 import school.hei.haapi.model.exception.BadRequestException;
 import school.hei.haapi.repository.EventParticipantRepository;
@@ -17,17 +18,18 @@ import static school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum.*
 @AllArgsConstructor
 public class EventParticipantService {
     private EventParticipantRepository eventParticipantRepository;
+    private EventParticipantMapper eventParticipantMapper;
 
     public List<EventParticipant> getAll(Integer page, Integer pageSize, String status) {
         if (page != null && pageSize != null) {
             if (status != null) {
                 return eventParticipantRepository
-                        .getAllByStatus(this.statusEnum(status), PageRequest.of(page, pageSize));
+                        .getAllByStatus(eventParticipantMapper.statusEnum(status), PageRequest.of(page, pageSize));
             }
             return eventParticipantRepository.findAll(PageRequest.of(page, pageSize)).toList();
         }
         if (status != null) {
-            return eventParticipantRepository.getAllByStatus(this.statusEnum(status));
+            return eventParticipantRepository.getAllByStatus(eventParticipantMapper.statusEnum(status));
         }
         return eventParticipantRepository.findAll();
     }
@@ -36,14 +38,14 @@ public class EventParticipantService {
         if (page != null && pageSize != null) {
             if (status != null) {
                 return eventParticipantRepository
-                        .getAllByEvent_IdAndStatus(eventId, this.statusEnum(status), PageRequest.of(page, pageSize));
+                        .getAllByEvent_IdAndStatus(eventId, eventParticipantMapper.statusEnum(status), PageRequest.of(page, pageSize));
             }
             return eventParticipantRepository
                     .getAllByEvent_Id(eventId, PageRequest.of(page, pageSize));
         }
         if (status != null) {
             return eventParticipantRepository
-                    .getAllByEvent_IdAndStatus(eventId, this.statusEnum(status));
+                    .getAllByEvent_IdAndStatus(eventId, eventParticipantMapper.statusEnum(status));
         }
         return eventParticipantRepository
                 .getAllByEvent_Id(eventId);
@@ -68,18 +70,5 @@ public class EventParticipantService {
             eventParticipantRepository.getByIdAndEvent_Id(eventParticipant.getId(), eventId);
         }
         return eventParticipantRepository.saveAll(eventParticipantList);
-    }
-
-    public StatusEnum statusEnum(String status) {
-        switch (status) {
-            case "EXPECTED":
-                return EXPECTED;
-            case "HERE":
-                return HERE;
-            case "MISSING":
-                return MISSING;
-            default:
-                throw new BadRequestException("status :" + status + " not found");
-        }
     }
 }
