@@ -38,6 +38,8 @@ public class TestUtils {
     public static final String PLACE2_ID = "place2_id";
     public static final String EVENT1_ID = "event1_id";
     public static final String EVENT2_ID = "event2_id";
+    public static final String EVENT_PARTICIPANT1_ID = "event_participant1_id";
+    public static final String EVENT_PARTICIPANT2_ID = "event_participant2_id";
     public static final String BAD_TOKEN = "bad_token";
     public static final String STUDENT1_TOKEN = "student1_token";
     public static final String TEACHER1_TOKEN = "teacher1_token";

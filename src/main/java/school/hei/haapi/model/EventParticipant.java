@@ -6,8 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +30,8 @@ public class EventParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    @Type(type = "pgsql_enum")
+    @Enumerated(EnumType.STRING)
     private school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status;
     @ManyToOne
     @JoinColumn(name = "user_participant_id", nullable = false)

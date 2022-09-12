@@ -1346,14 +1346,23 @@ components:
     CreateEventParticipant:
       type: object
       properties:
-        id:
-          type: string
         user_participant_id:
           type: string
 
     EventParticipant:
       type: object
       properties:
+        id:
+          type: string
+<<<<<<< HEAD
+        user_participant_id:
+          type: string
+
+    EventParticipant:
+      type: object
+      properties:
+=======
+>>>>>>> eventParticipant
         status:
           type: string
           enum:
