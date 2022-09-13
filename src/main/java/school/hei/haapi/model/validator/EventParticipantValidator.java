@@ -23,7 +23,7 @@ public class EventParticipantValidator implements Consumer<EventParticipant> {
             throw new BadRequestException(
                     "Event participant id:" + eventParticipant.getUserParticipant().getId() +
                             " in Event:" + eventParticipant.getEvent().getId() +
-                            "existe deja");
+                            " already exists.");
         }
     }
 
