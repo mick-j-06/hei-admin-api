@@ -107,8 +107,7 @@ public class EventIT {
         EventApi api = new EventApi(anonymousClient);
         assertThrowsForbiddenException(() -> api.createOrUpdateEvents(List.of()));
     }
-
-    // TODO :   Fixed the time zone problem
+    
     @Test
     void student_read_ok() throws ApiException {
         ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
