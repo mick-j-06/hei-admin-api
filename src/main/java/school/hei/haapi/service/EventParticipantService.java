@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.EventParticipant;
 import school.hei.haapi.model.exception.BadRequestException;
+import school.hei.haapi.model.validator.EventParticipantValidator;
 import school.hei.haapi.repository.EventParticipantRepository;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EventParticipantService {
     private EventParticipantRepository eventParticipantRepository;
+    private EventParticipantValidator eventParticipantValidator;
 
     public List<EventParticipant> getAll(Integer page, Integer pageSize, school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status) {
         if (page != null && pageSize != null) {
@@ -56,17 +58,7 @@ public class EventParticipantService {
 
     @Transactional
     public List<EventParticipant> createAll(List<EventParticipant> eventParticipantList) {
-        for (EventParticipant eventParticipant : eventParticipantList) {
-            if (eventParticipantRepository.getByUserParticipant_IdAndEvent_Id(
-                    eventParticipant.getUserParticipant().getId(),
-                    eventParticipant.getEvent().getId()
-            ) != null) {
-                throw new BadRequestException(
-                        "Event participant id:" + eventParticipant.getUserParticipant().getId() +
-                                " in Event:" + eventParticipant.getEvent().getId() +
-                                "existe deja");
-            }
-        }
+        eventParticipantValidator.accept(eventParticipantList);
         return eventParticipantRepository.saveAll(eventParticipantList);
     }
 
