@@ -7,10 +7,10 @@ create table if not exists "event"
     name            varchar not null,
     ref             varchar not null
         constraint event_ref_unique unique,
-    starting_hours  timestamp,
-    ending_hours     timestamp,
+    starting_hours  timestamp with time zone,
+    ending_hours    timestamp with time zone,
     user_manager_id varchar not null
-        constraint event_user_id_fk references "user"(id),
+        constraint event_user_id_fk references "user" (id),
     place_id        varchar not null
-        constraint event_place_id_fk references "place"(id)
+        constraint event_place_id_fk references "place" (id)
 );
