@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.EventParticipant;
+import school.hei.haapi.model.exception.BadRequestException;
 import school.hei.haapi.repository.EventParticipantRepository;
 
 import javax.transaction.Transactional;
@@ -55,6 +56,17 @@ public class EventParticipantService {
 
     @Transactional
     public List<EventParticipant> createAll(List<EventParticipant> eventParticipantList) {
+        for (EventParticipant eventParticipant : eventParticipantList) {
+            if (eventParticipantRepository.getByUserParticipant_IdAndEvent_Id(
+                    eventParticipant.getUserParticipant().getId(),
+                    eventParticipant.getEvent().getId()
+            ) != null) {
+                throw new BadRequestException(
+                        "Event participant id:" + eventParticipant.getUserParticipant().getId() +
+                                " in Event:" + eventParticipant.getEvent().getId() +
+                                "existe deja");
+            }
+        }
         return eventParticipantRepository.saveAll(eventParticipantList);
     }
 
