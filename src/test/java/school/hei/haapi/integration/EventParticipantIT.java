@@ -136,19 +136,14 @@ public class EventParticipantIT {
     void manager_write_update_ok() throws ApiException {
         ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
         EventApi api = new EventApi(manager1Client);
-        List<EventParticipant> toUpdate = api.createEventEventParticipants(EVENT2_ID, List.of(
-                someCreatableCreateEventParticipant(),
-                someCreatableCreateEventParticipant()));
+        List<EventParticipant> toUpdate = api.createEventEventParticipants(EVENT2_ID, List.of(someCreatableCreateEventParticipant()));
         EventParticipant toUpdate0 = toUpdate.get(0);
         toUpdate0.setStatus(EventParticipant.StatusEnum.HERE);
-        EventParticipant toUpdate1 = toUpdate.get(1);
-        toUpdate1.setStatus(EventParticipant.StatusEnum.MISSING);
 
         List<EventParticipant> updated = api.updateEventEventParticipants(EVENT2_ID, toUpdate);
 
-        assertEquals(2, updated.size());
+        assertEquals(1, updated.size());
         assertTrue(updated.contains(toUpdate0));
-        assertTrue(updated.contains(toUpdate1));
     }
 
     static class ContextInitializer extends AbstractContextInitializer {
