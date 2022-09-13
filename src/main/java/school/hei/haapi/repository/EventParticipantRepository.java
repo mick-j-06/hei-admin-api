@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface EventParticipantRepository extends JpaRepository<EventParticipant, String> {
 
+    EventParticipant getByUserParticipant_IdAndEvent_Id(String userParticipantId, String eventId);
+
     EventParticipant getByIdAndEvent_Id(String id, String eventId);
 
     List<EventParticipant> getAllByEvent_Id(String eventId);
