@@ -117,6 +117,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .antMatchers(GET, "/event_participants").authenticated()
                 .antMatchers(GET,"/bucket/summary").authenticated()
                 .antMatchers(GET, "/bucket/objet/*").authenticated()
+                .antMatchers(GET, "/rekognition").authenticated()
+                .antMatchers(POST, "/rekognition").authenticated()
                 .antMatchers("/**").denyAll()
 
                 // disable superfluous protections
