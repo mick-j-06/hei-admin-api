@@ -37,19 +37,8 @@ public class AwsRekognitionService {
         CompareFacesResult compareFacesResult = rekognitionClient.compareFaces(request);
 
         List<CompareFacesMatch> faceDetails = compareFacesResult.getFaceMatches();
-        for (CompareFacesMatch match : faceDetails) {
-            ComparedFace face = match.getFace();
-            BoundingBox position = face.getBoundingBox();
-            System.out.println("Face at " + position.getLeft().toString()
-                    + " " + position.getTop()
-                    + " matches with " + match.getSimilarity().toString()
-                    + "% confidence.");
-
-        }
         List<ComparedFace> uncompared = compareFacesResult.getUnmatchedFaces();
 
-        System.out.println("There was " + uncompared.size()
-                + " face(s) that did not match");
         return faceDetails;
     }
 }
