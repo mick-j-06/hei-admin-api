@@ -117,7 +117,7 @@ paths:
           in: query
           schema:
             $ref: '#/components/schemas/PageSize'
-      operationId: getStudentsByGroup
+      operationId: getStudentsByGroupId
       responses:
         '200':
           description: The students list
