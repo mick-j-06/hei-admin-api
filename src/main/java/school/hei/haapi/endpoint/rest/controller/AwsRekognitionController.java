@@ -2,7 +2,6 @@ package school.hei.haapi.endpoint.rest.controller;
 
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,11 +13,6 @@ import java.nio.file.NoSuchFileException;
 public class AwsRekognitionController {
     @Autowired
     private AwsRekognitionService awsRekognitionService;
-
-    @GetMapping(value = "/rekognition")
-    public String rek() {
-        return "rekognition";
-    }
 
     @PostMapping(value = "/rekognition")
     public S3ObjectSummary getAll(@RequestBody byte[] image) throws NoSuchFileException {

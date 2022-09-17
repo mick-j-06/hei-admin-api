@@ -13,6 +13,7 @@ import school.hei.haapi.endpoint.rest.model.CreateEventParticipant;
 import school.hei.haapi.endpoint.rest.model.EventParticipant;
 import school.hei.haapi.service.EventParticipantService;
 
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,14 @@ public class EventParticipantController {
                                 .collect(Collectors.toUnmodifiableList())
                 ).stream().map(eventParticipantMapper::toRest)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @PutMapping(value = "/events/{event_id}/presence")
+    public EventParticipant presenceWithImage(
+            @PathVariable String event_id,
+            @RequestBody byte[] image
+    ) throws NoSuchFileException {
+        return eventParticipantMapper.toRest(eventParticipantService.updateStatusWithImage(event_id, image));
     }
 
     @PutMapping(value = "/events/{event_id}/event_participants")

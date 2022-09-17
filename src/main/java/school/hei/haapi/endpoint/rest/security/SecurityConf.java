@@ -114,6 +114,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .antMatchers(GET, "/events/*/event_participants/*").authenticated()
                 .antMatchers(POST, "/events/*/event_participants/**").hasAnyRole(MANAGER.getRole())
                 .antMatchers(PUT, "/events/*/event_participants/**").hasAnyRole(MANAGER.getRole())
+                .antMatchers(PUT, "events/*/presence").authenticated()
                 .antMatchers(GET, "/event_participants").authenticated()
                 .antMatchers(GET,"/bucket/summary").authenticated()
                 .antMatchers(GET, "/bucket/objet/*").authenticated()

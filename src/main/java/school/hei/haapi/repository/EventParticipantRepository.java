@@ -12,6 +12,8 @@ public interface EventParticipantRepository extends JpaRepository<EventParticipa
 
     EventParticipant getByUserParticipant_IdAndEvent_Id(String userParticipantId, String eventId);
 
+    EventParticipant getByEvent_IdAndUserParticipant_KeyImageInBucket(String event_id, String userParticipant_keyImageInBucket);
+
     EventParticipant getByIdAndEvent_Id(String id, String eventId);
 
     List<EventParticipant> getAllByEvent_Id(String eventId);

@@ -75,6 +75,9 @@ public class User implements Serializable {
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @Column(name = "key_image_in_bucket", unique = true)
+  private String keyImageInBucket;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
