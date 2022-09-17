@@ -18,7 +18,7 @@ import java.util.List;
 public class EventParticipantService {
     private EventParticipantRepository eventParticipantRepository;
     private EventParticipantValidator eventParticipantValidator;
-    private AwsRekognitionService awsRekognitionService;
+//    private AwsRekognitionService awsRekognitionService;
 
     public List<EventParticipant> getAll(Integer page, Integer pageSize, school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status) {
         if (page != null && pageSize != null) {
@@ -34,16 +34,16 @@ public class EventParticipantService {
         return eventParticipantRepository.findAll();
     }
 
-    public EventParticipant updateStatusWithImage(String eventId, byte[] sourceImage) throws NoSuchFileException {
-        S3ObjectSummary s3ObjectSummary = awsRekognitionService.compareFacesMatches(sourceImage);
-        EventParticipant eventParticipant = eventParticipantRepository
-                .getByEvent_IdAndUserParticipant_KeyImageInBucket(
-                        eventId,
-                        s3ObjectSummary.getKey()
-                );
-        eventParticipant.setStatus(school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum.HERE);
-        return eventParticipantRepository.save(eventParticipant);
-    }
+//    public EventParticipant updateStatusWithImage(String eventId, byte[] sourceImage) throws NoSuchFileException {
+//        S3ObjectSummary s3ObjectSummary = awsRekognitionService.compareFacesMatches(sourceImage);
+//        EventParticipant eventParticipant = eventParticipantRepository
+//                .getByEvent_IdAndUserParticipant_KeyImageInBucket(
+//                        eventId,
+//                        s3ObjectSummary.getKey()
+//                );
+//        eventParticipant.setStatus(school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum.HERE);
+//        return eventParticipantRepository.save(eventParticipant);
+//    }
 
     public List<EventParticipant> getAllByEventId(Integer page, Integer pageSize, String eventId, school.hei.haapi.endpoint.rest.model.EventParticipant.StatusEnum status) {
         if (page != null && pageSize != null) {
