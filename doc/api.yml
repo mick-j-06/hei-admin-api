@@ -696,6 +696,43 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+  /events/{event_id}/presence:
+    put:
+      tags:
+        - Event
+      summary: Update a event_participant's status with their image.
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: updateEventEventParticipantsStatus
+      requestBody:
+        description: Event event participants to update
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Updated Event event participants
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventParticipant'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
   /event_participants:
     get:
       tags:
