@@ -183,10 +183,14 @@ class StudentIT {
     Student actualStudent1 = api.getStudentById(STUDENT1_ID);
 
     List<Student> actualStudents = api.getStudents(1, 20, null, null, null);
+    List<Student> listByGroup = api.getStudentsByGroupId("group2_id",null,null);
 
     assertEquals(student1(), actualStudent1);
     assertTrue(actualStudents.contains(student1()));
     assertTrue(actualStudents.contains(student2()));
+
+    assertFalse(listByGroup.contains(student1()));
+    assertFalse(listByGroup.contains(student2()));
   }
 
   @Test
@@ -211,9 +215,13 @@ class StudentIT {
     UsersApi api = new UsersApi(manager1Client);
 
     List<Student> actualStudents = api.getStudents(1, 20, null, null, null);
+    List<Student> listByGroup = api.getStudentsByGroupId("group2_id",null,null);
 
     assertTrue(actualStudents.contains(student1()));
     assertTrue(actualStudents.contains(student2()));
+
+    assertFalse(listByGroup.contains(student1()));
+    assertFalse(listByGroup.contains(student2()));
   }
 
   @Test

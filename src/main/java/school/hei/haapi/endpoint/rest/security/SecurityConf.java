@@ -101,6 +101,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .antMatchers(GET, "/groups").authenticated()
                 .antMatchers(GET, "/groups/*").authenticated()
                 .antMatchers(PUT, "/groups/**").hasAnyRole(MANAGER.getRole())
+                .antMatchers(GET,"/groups/*/students").authenticated()
                 .antMatchers(GET, "/courses").authenticated()
                 .antMatchers(GET, "/courses/*").authenticated()
                 .antMatchers(PUT, "/courses/**").hasAnyRole(MANAGER.getRole())
