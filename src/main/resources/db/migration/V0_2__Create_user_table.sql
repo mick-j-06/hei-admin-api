@@ -29,6 +29,9 @@ create table if not exists "user"
     entrance_datetime timestamp with time zone not null,
     phone             varchar                  not null,
     address           varchar                  not null,
-    role              role                     not null
+    role              role                     not null,
+    group_id    varchar
+        constraint user_group_fk references "group"(id)
 );
+
 create index if not exists user_last_name_index on "user" (last_name);
