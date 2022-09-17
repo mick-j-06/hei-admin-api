@@ -87,6 +87,7 @@ class StudentIT {
     student.setEntranceDatetime(birthday.plus(365L * ageOfEntrance, ChronoUnit.DAYS));
     student.setAddress(faker.address().fullAddress());
     student.setGroupId("group1_id");
+    student.setKeyImageInBucket(null);
     return student;
   }
 
@@ -112,6 +113,7 @@ class StudentIT {
     student.setEntranceDatetime(Instant.parse("2021-11-08T08:25:24.00Z"));
     student.setAddress("Adr 1");
     student.setGroupId("group1_id");
+    student.setKeyImageInBucket("toky1.jpg");
     return student;
   }
 
@@ -129,6 +131,7 @@ class StudentIT {
     student.setEntranceDatetime(Instant.parse("2021-11-09T08:26:24.00Z"));
     student.setAddress("Adr 2");
     student.setGroupId("group1_id");
+    student.setKeyImageInBucket(null);
     return student;
   }
 
@@ -146,6 +149,7 @@ class StudentIT {
     student.setEntranceDatetime(Instant.parse("2021-11-09T08:26:24.00Z"));
     student.setAddress("Adr 2");
     student.setGroupId("group1_id");
+    student.setKeyImageInBucket(null);
     return student;
   }
 

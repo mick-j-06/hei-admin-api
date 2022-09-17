@@ -81,8 +81,8 @@ public class User implements Serializable {
   @JoinColumn(name = "group_id")
   private Group group;
 
-//  @Column(name = "key_image_in_bucket", unique = true)
-//  private String keyImageInBucket;
+  @Column(name = "key_image_in_bucket", unique = true)
+  private String keyImageInBucket;
 
   @Override
   public boolean equals(Object o) {

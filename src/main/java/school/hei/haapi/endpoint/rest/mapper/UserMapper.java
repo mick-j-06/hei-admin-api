@@ -31,6 +31,7 @@ public class UserMapper {
         restStudent.setSex(Student.SexEnum.fromValue(user.getSex().toString()));
         restStudent.setAddress(user.getAddress());
         restStudent.setGroupId(user.getGroup().getId());
+        restStudent.setKeyImageInBucket(user.getKeyImageInBucket());
 
         return restStudent;
     }
@@ -49,6 +50,7 @@ public class UserMapper {
         teacher.setBirthDate(user.getBirthDate());
         teacher.setSex(Teacher.SexEnum.fromValue(user.getSex().toString()));
         teacher.setAddress(user.getAddress());
+        teacher.setKeyImageInBucket(user.getKeyImageInBucket());
 
         return teacher;
     }
@@ -67,6 +69,7 @@ public class UserMapper {
         manager.setBirthDate(user.getBirthDate());
         manager.setSex(Manager.SexEnum.fromValue(user.getSex().toString()));
         manager.setAddress(user.getAddress());
+        manager.setKeyImageInBucket(user.getKeyImageInBucket());
 
         return manager;
     }
@@ -85,6 +88,7 @@ public class UserMapper {
                 .birthDate(teacher.getBirthDate())
                 .sex(User.Sex.valueOf(teacher.getSex().toString()))
                 .address(teacher.getAddress())
+                .keyImageInBucket(teacher.getKeyImageInBucket())
                 .build();
     }
 
@@ -103,6 +107,7 @@ public class UserMapper {
                 .sex(User.Sex.valueOf(student.getSex().toString()))
                 .address(student.getAddress())
                 .group(groupRepository.getById(Objects.requireNonNull(student.getGroupId())))
+                .keyImageInBucket(student.getKeyImageInBucket())
                 .build();
     }
 }

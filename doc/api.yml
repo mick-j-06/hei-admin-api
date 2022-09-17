@@ -1381,6 +1381,9 @@ components:
           format: date-time
         status:
           $ref: '#/components/schemas/EnableStatus'
+        key_image_in_bucket:
+          type: string
+          example: toky1.jpg
 
     EnableStatus:
       type: string
