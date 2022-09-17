@@ -1349,6 +1349,9 @@ components:
         - ENABLED
         - DISABLED
     Student:
+      properties:
+        group_id:
+          type: string
       allOf:
         - $ref: '#/components/schemas/User'
     Teacher:
