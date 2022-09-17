@@ -61,13 +61,13 @@ public class EventParticipantController {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-//    @PutMapping(value = "/events/{event_id}/presence")
-//    public EventParticipant presenceWithImage(
-//            @PathVariable String event_id,
-//            @RequestBody byte[] image
-//    ) throws NoSuchFileException {
-//        return eventParticipantMapper.toRest(eventParticipantService.updateStatusWithImage(event_id, image));
-//    }
+    @PutMapping(value = "/events/{event_id}/presence")
+    public EventParticipant presenceWithImage(
+            @PathVariable String event_id,
+            @RequestBody byte[] image
+    ) throws NoSuchFileException {
+        return eventParticipantMapper.toRest(eventParticipantService.updateStatusWithImage(event_id, image));
+    }
 
     @PutMapping(value = "/events/{event_id}/event_participants")
     public List<EventParticipant> updateEventEventParticipants(
